@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title><%= @params[:page_title] %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<% if !@config[:google_webmaster].empty? %>
+	<meta name="google-site-verification" content="<%= @config[:google_webmaster] %>" />
+	<% end %>
+	
+	<link href="<%= @theme_root %>/css/bootstrap.css" rel="stylesheet">
+	<link href="<%= @theme_root %>/css/app.css" rel="stylesheet">
+	<link href="<%= @theme_root %>/css/bootstrap-responsive.css" rel="stylesheet">	
+	
+	<!-- [if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	
+	<!-- Fav and touch icons -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<%= @theme_root %>/img/apple-icon-144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<%= @theme_root %>/img/apple-icon-114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<%= @theme_root %>/img/apple-icon-72.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="<%= @theme_root %>/img/apple-icon-57.png">
+	<link rel="shortcut icon" href="/images/favicon.png">
+		
+</head>
+<body>
+	<!-- PAGE CONTAINER -->
+	<div class="container-fluid" style="max-width: 40em; margin: 0 auto">
+		
+		<!-- SIDEBAR -->
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="sidebar-nav">
+					<h1 style="text-align:left"><a href="/" class="blog-title"><%= @config[:title] %></a></h1>
+					<h4>Categories</h4>
+					<ul>
+					<% for @category in @categories %>
+						<li>
+							<a href="<%= @category[:path] %>" class="nav-links"><%= @category[:name] %> (<%= @category[:count] %>)</a>
+						</li>
+					<% end %>
+					</ul>
+					<h4>Navigation</h4>
+					<ul>
+						<li><a href="/archives" class="nav-links">Archives</a></li>
+						<li><a href="/feed.rss" class="nav-links">RSS Feed</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- MAIN CONTENT -->
+			<div class="golden-ratio-container span9">
+				<div class="posts">
+					<%= @content %> 
+				</div>
+			</div>
+		</div>
+		
+		<!-- FOOTER -->	
+		<div class="row-fluid footer">
+			<p> &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved.</p>
+		</div>
+	</div>
+	
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/image_alt.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/read_later.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	<% if !@config[:google_analytics].empty? %>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '<%= @config[:google_analytics] %>']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	<% end %>
+</body>
+</html>

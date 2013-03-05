@@ -1,0 +1,14 @@
+<section id="archive">
+	<header>
+		<h1><%= @params[:page_name] %></h1>
+	</header>
+	<section id="archive-listing">  
+	<% for @article in @articles %>
+		<div>
+			<div><a href="<%= @article.path %>"><%= @article.title %></a></div>
+			<div><%= @article.date %></div>
+			<div><%= @article.category %>
+		</div>
+	<% end %>
+	</section>  
+</section>

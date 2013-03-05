@@ -1,0 +1,15 @@
+<section>
+  <header>
+    <h1><%= @params[:page_name] %></h1>
+  </header>
+  <section id="articles-list">
+
+  	<% for @article in @articles %>
+  		<div>
+  			<div class="article-title"><a href="<%= @article.path %>"><%= @article.title %></a></div>
+  			<div><%= @article.summary %></div>
+  		</div>
+  	<% end %>
+
+  </section>
+</section>
