@@ -12,7 +12,7 @@ but still only a scant 400 lines of easy-to-ready code.
 * Author articles or custom pages in markdown, text or HTML
 * Article categories supported by simply putting articles in a folder
 * Many permalink formats are supported, including a custom prefix and several 
-date formates
+date formats
 * 301 or 302 redirects are support for easy porting from your current blog
 * SEO optimized with built-in support for Robots.txt, Google Analytics, Google 
 web master tools
@@ -28,12 +28,12 @@ TODO - insert link to client project when ready...
 
 ##Next Steps
 
-I wrote this as an excuse to learn a handful of new techologies and approaches, 
+I wrote this as an excuse to learn a handful of new technologies and approaches, 
 like Ruby and TDD. There are an ambitious set of features I'd like to add that 
 each align to something else I would like to learn:
 
 * Themes - I'm designing 3-4 fancy, shmancy themes to try out this new 'flat'
-and minimalist thing everyone's excited about. Also a good excuse to digg into
+and minimalist thing everyone's excited about. Also a good excuse to dig into
 HTML5, CSS3, JQuery, Instagram's API and a few other things.
 
 * Pre-rendering - the platform nerd in me doesn't understand why the whole 
@@ -42,14 +42,14 @@ assets (a la <a href="https://github.com/mojombo/jekyll">Jekyll</a>)
 
 * JavaScript Comments - the blog engine currently uses Disqus for comments,
 which is free and cool, but I hate letting other people own my data. I want 
-to build something similar to Disqus ontop of 
+to build something similar to Disqus on top of 
 <a href="https://www.parse.com/">Parse</a> / 
 <a href="https://github.com/documentcloud/backbone">Backbone</a> and make it 
 really easy to use
 
 * Simple Plugin Model - I've always wanted to write a plug-in model. I tried
 to write one in C++ in college and was only able to do static linking (lame). I
-think an inturpretted language will make it much easier, right?
+think an interpreted language will make it much easier, right?
 
 ##How Does it Work?
 
@@ -84,7 +84,7 @@ Project structure:
 	    ├── sample_data/					sample data for testing
 	    └── spec_helper.rb
 
-* Baron::BlogEngine - handles the main application loop. It handles bulding the
+* Baron::BlogEngine - handles the main application loop. It handles building the
 right page for every given route. It also contains all the logic for where all
 the files are stored.
 
@@ -155,7 +155,7 @@ SOFTWARE.
 
 ##Thanks
 
-While writing this blog engine, I barrowed a lot of code and design approches
+While writing this blog engine, I barrowed a lot of code and design approaches
 from the Toto project by Cloudhead and the Scanty project by Adam Wiggins. The
 primary purpose of this project was a learning one for me, and both of these
 folks provided a lot of good code an examples. I'm not sure how much code or 
