@@ -8,19 +8,17 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "baron"
-    gem.summary = %Q{Hacked version of the toto blog engine}
-    gem.description = %Q{Hacked version of the toto blog engine.}
+    gem.summary = %Q{Minimalist, yet full-featured, blog engine in 400 lines of code.}
+    gem.description = %Q{What's in the box: (1) Publish to Heroku using Git (2) Author articles in markdown (3) Article categories (4) Multiple permalink formats supported (5) Redirects (6) Advanced SEO optimizations and Google Analytics/ Webmaster Tools support. Uses Rack, RSpec, Bootstrap, JQuery, Disqus, Thin}
     gem.email = "nbuggia@gmail.com"
-    gem.homepage = "https://github.com/nbuggia/baron"
+    gem.homepage = "https://github.com/nbuggia/baron-blog-engine-gem"
     gem.authors = ["Nathan Buggia"]
     gem.add_development_dependency "rspec"
-    gem.add_dependency "builder"
     gem.add_dependency "rack"
-    gem.add_dependency "rdiscount"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+  puts "Jeweler (or a dependency) not available. Install with: sudo gem install jeweler"
 end
 
 ##
