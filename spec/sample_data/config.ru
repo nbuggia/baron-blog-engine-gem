@@ -2,6 +2,7 @@
 # Baron configuration
 
 require 'baron'
+
 baron = Baron::Server.new do
   #
   # Add your settings here
