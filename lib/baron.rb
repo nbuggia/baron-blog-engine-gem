@@ -65,9 +65,13 @@ module Baron
     end
     
     def render_html partial_template, layout_template
-      @content = ERB.new(File.read(partial_template)).result(binding)
       @theme_root = "/themes/#{@config[:theme]}"
-      ERB.new(File.read(layout_template)).result(binding)
+      @content = ERB.new(File.read(partial_template)).result(binding)
+      if @content[0..99].include? '<html'
+        return @content
+      else
+        ERB.new(File.read(layout_template)).result(binding)
+      end 
     end
     
     def render_rss template
@@ -272,7 +276,7 @@ module Baron
       "/#{permalink_prefix}/#{self[:category]}#{date_path}/#{slug}/".squeeze('/')      
     end
     
-    def title()     self[:title].titleize || 'Untitled'                                       end
+    def title()     self[:title] || 'Untitled'                                                end
     def date()      @config[:date].call(self[:date])                                          end
     def author()    self[:author] || @config[:author]                                         end
     def category()  self[:category]                                                           end
