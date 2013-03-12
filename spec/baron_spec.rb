@@ -63,7 +63,7 @@ describe "Baron" do
     it_behaves_like "Server HTML Response"    
   end
 
-  describe "GET category index page" do
+  describe "GET category home page" do
     before :all do
       @response = @baron.get('/poems/')
     end
@@ -113,6 +113,7 @@ describe "Baron" do
       response.body.should include('404')
       # should not render in the layout.rhtml if <html is in the first 100 chars
       response.body.should_not include("<meta name=\"description\" content="">")
+      response.body.should include ('Error')
     end
     
   end

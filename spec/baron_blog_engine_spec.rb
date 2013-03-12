@@ -20,7 +20,7 @@ describe "Baron::BlogEngine" do
       @blog_engine.get_theme_template('article').should == SAMPLE_DATA_PATH + 'themes/test/templates/article.rhtml'
       @blog_engine.get_theme_template('category').should == SAMPLE_DATA_PATH + 'themes/test/templates/category.rhtml'
       @blog_engine.get_theme_template('error').should == SAMPLE_DATA_PATH + 'themes/test/templates/error.rhtml'
-      @blog_engine.get_theme_template('index').should == SAMPLE_DATA_PATH + 'themes/test/templates/index.rhtml'
+      @blog_engine.get_theme_template('home').should == SAMPLE_DATA_PATH + 'themes/test/templates/home.rhtml'
       @blog_engine.get_theme_template('layout').should == SAMPLE_DATA_PATH + 'themes/test/templates/layout.rhtml'
       @blog_engine.get_system_resource('redirects.txt').should == SAMPLE_DATA_PATH + 'resources/redirects.txt'
       @blog_engine.get_system_resource('robots.txt').should == SAMPLE_DATA_PATH + 'resources/robots.txt'

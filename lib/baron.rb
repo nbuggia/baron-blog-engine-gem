@@ -115,7 +115,7 @@ module Baron
           File.read(get_system_resource('robots.txt')) rescue raise(Errno::ENOENT, 'Page not found')
         
         # Home page... /
-        elsif route.first == 'index'
+        elsif route.first == 'home'
           all_articles = get_all_articles()
           params[:page_forward] = '/page/2/' if @config[:article_max] < all_articles.count
           PageController.new(all_articles, categories, @config[:article_max], params, @config) . 
@@ -137,7 +137,7 @@ module Baron
           params[:page_title] = "Page #{page_num.to_s} #{@config[:title_delimiter]} #{@config[:title]}"
           
           PageController.new(articles_on_this_page, categories, @config[:article_max], params, @config) . 
-            render_html(get_theme_template('index'), get_theme_template('layout'))
+            render_html(get_theme_template('home'), get_theme_template('layout'))
         
         # System routes... /robots.txt, /archives
         elsif route.first == 'archives' or route.first == 'robots'
@@ -150,8 +150,8 @@ module Baron
           PageController.new(get_all_articles(), categories, @config[:article_max], params, @config) . 
             render_html(get_page_template(route.first), get_theme_template('layout'))
       
-        # Category index pages... /projects/, /photography/, /poems/, etc
-        elsif is_route_category_index? route.last
+        # Category home pages... /projects/, /photography/, /poems/, etc
+        elsif is_route_category_home? route.last
           filtered_articles = get_all_articles().select { |h| h[:category] == route.last }
           params[:page_name] = route.last.gsub('-', ' ').titleize()
           PageController.new(filtered_articles, categories, :all, params, @config) .
@@ -227,7 +227,7 @@ module Baron
       (Dir["#{get_pages_path}/*"]).include?("#{get_pages_path}/#{path_node}.rhtml")
     end
     
-    def is_route_category_index? path_node
+    def is_route_category_home? path_node
       get_all_categories().each { |h| return true if h[:node_name] == path_node }
       return false
     end
@@ -302,7 +302,7 @@ module Baron
   class Config < Hash
     Defaults = {
       :cache => 28800,                                      # cache duration (seconds)
-      :root => 'index',                                     # site index
+      :root => 'home',                                      # site home page
       :sample_data_path => '',                              # used by the RSpec tests to show where the sample data is stored
       :author => ENV['USER'],                               # blog author
       :title => Dir.pwd.split('/').last,                    # site title
