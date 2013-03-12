@@ -111,7 +111,10 @@ describe "Baron" do
       response.status.should == 404
       response.body.should include('Page not found')
       response.body.should include('404')
+      # should not render in the layout.rhtml if <html is in the first 100 chars
+      response.body.should_not include("<meta name=\"description\" content="">")
     end
+    
   end
   
   describe "GET /feed.rss" do    
@@ -128,7 +131,7 @@ describe "Baron" do
       @response.body.scan(/<\/entry>/).count.should == 3
       @response.body.should include('<feed')
       @response.body.should include('</feed>')
-    end    
+    end 
   end
   
   describe "GET /robots.txt" do
