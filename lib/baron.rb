@@ -115,13 +115,13 @@ module Baron
           File.read(get_system_resource('robots.txt')) rescue raise(Errno::ENOENT, 'Page not found')
         
         # Home page... /
-        elsif route.first == 'home'
+        elsif route.first == @config[:root]
           all_articles = get_all_articles()
           params[:page_forward] = '/page/2/' if @config[:article_max] < all_articles.count
           PageController.new(all_articles, categories, @config[:article_max], params, @config) . 
             render_html(get_theme_template(route.first), get_theme_template('layout'))
             
-        # Pagination... /page/2
+        # Pagination... /page/2, /page/2/
         elsif route.first == 'page' && route.count == 2
           page_num = route.last.to_i() rescue page_num = -1
           all_articles = get_all_articles()
@@ -244,7 +244,7 @@ module Baron
       @config = config
       self[:filename_and_path] = file_parts[:filename_and_path]
       self[:slug] = file_parts[:filename]
-      self[:category] = file_parts[:category].empty? ? :default : file_parts[:category]
+      self[:category] = file_parts[:category].empty? ? '' : file_parts[:category]
       self[:date] = Date.parse(file_parts[:date].gsub('/', '-')) rescue Date.today
       load_article(file_parts[:filename_and_path])
     end
