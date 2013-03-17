@@ -17,11 +17,11 @@ describe "Baron::BlogEngine" do
       @blog_engine.get_pages_path.should == SAMPLE_DATA_PATH + 'pages/'
       @blog_engine.get_articles_path.should == SAMPLE_DATA_PATH + 'articles'
       @blog_engine.get_page_template('about').should == SAMPLE_DATA_PATH + 'pages/about.rhtml'
-      @blog_engine.get_theme_template('article').should == SAMPLE_DATA_PATH + 'themes/test/templates/article.rhtml'
-      @blog_engine.get_theme_template('category').should == SAMPLE_DATA_PATH + 'themes/test/templates/category.rhtml'
-      @blog_engine.get_theme_template('error').should == SAMPLE_DATA_PATH + 'themes/test/templates/error.rhtml'
-      @blog_engine.get_theme_template('home').should == SAMPLE_DATA_PATH + 'themes/test/templates/home.rhtml'
-      @blog_engine.get_theme_template('layout').should == SAMPLE_DATA_PATH + 'themes/test/templates/layout.rhtml'
+      @blog_engine.get_theme_template('article').should == SAMPLE_DATA_PATH + 'themes/typography/templates/article.rhtml'
+      @blog_engine.get_theme_template('category').should == SAMPLE_DATA_PATH + 'themes/typography/templates/category.rhtml'
+      @blog_engine.get_theme_template('error').should == SAMPLE_DATA_PATH + 'themes/typography/templates/error.rhtml'
+      @blog_engine.get_theme_template('home').should == SAMPLE_DATA_PATH + 'themes/typography/templates/home.rhtml'
+      @blog_engine.get_theme_template('layout').should == SAMPLE_DATA_PATH + 'themes/typography/templates/layout.rhtml'
       @blog_engine.get_system_resource('redirects.txt').should == SAMPLE_DATA_PATH + 'resources/redirects.txt'
       @blog_engine.get_system_resource('robots.txt').should == SAMPLE_DATA_PATH + 'resources/robots.txt'
       @blog_engine.get_system_resource('feeds.rss').should == SAMPLE_DATA_PATH + 'resources/feeds.rss'
@@ -29,26 +29,28 @@ describe "Baron::BlogEngine" do
     
     it "finds all categories" do
       categories = @blog_engine.get_all_categories
-      categories.count.should == 2
-      categories.first[:name].should == 'Code Projects'
-      categories.first[:path].should == '/code-projects/'
-      categories.first[:count].should == 0
-      categories.last[:name].should == 'Poems'
-      categories.last[:path].should == '/poems/'
-      categories.last[:count].should == 2
+      categories.count.should == 4
+      categories.first[:name].should == 'Favorites'
+      categories.first[:path].should == '/favorites/'
+      categories.first[:count].should == 1
+      categories.last[:name].should == 'Other Authors'
+      categories.last[:path].should == '/other-authors/'
+      categories.last[:count].should == 1
     end
-    
+
+    # todo, refactor to break out testing that we're appropriately breaking the fileparts down
+
     it "finds all articles" do
       articles_fileparts = @blog_engine.get_all_articles()
-      articles_fileparts.count.should == 3
-      articles_fileparts.first[:filename_and_path].should == SAMPLE_DATA_PATH + 'articles/2012-11-09-sample-post.txt' 
-      articles_fileparts.first[:date].should == '2012-11-09' 
-      articles_fileparts.first[:filename].should == 'sample-post' 
-      articles_fileparts.first[:category].should == ''
-      articles_fileparts.last[:filename_and_path].should == SAMPLE_DATA_PATH + 'articles/poems/1909-01-02-If.txt' 
+      articles_fileparts.count.should == 7
+      articles_fileparts.first[:filename_and_path].should == SAMPLE_DATA_PATH + 'articles/favorites/1916-01-01-the-road-not-taken.txt' 
+      articles_fileparts.first[:date].should == '1916-01-01' 
+      articles_fileparts.first[:filename].should == 'the-road-not-taken' 
+      articles_fileparts.first[:category].should == 'favorites'
+      articles_fileparts.last[:filename_and_path].should == SAMPLE_DATA_PATH + 'articles/other authors/1909-01-02-If.txt' 
       articles_fileparts.last[:date].should == '1909-01-02' 
       articles_fileparts.last[:filename].should == 'if' 
-      articles_fileparts.last[:category].should == 'poems' 
+      articles_fileparts.last[:category].should == 'other authors' 
     end
     
     it "returns all article parts" do

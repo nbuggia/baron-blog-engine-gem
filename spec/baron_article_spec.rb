@@ -8,7 +8,7 @@ require 'spec_helper'
 describe "Baron::ArticleModel" do
   before :all do
     @config = load_config()
-    @article_parts = {:filename_and_path => "#{SAMPLE_DATA_PATH}articles/poems/1916-01-01-the-road-not-taken.txt", 
+    @article_parts = {:filename_and_path => "#{SAMPLE_DATA_PATH}articles/favorites/1916-01-01-the-road-not-taken.txt", 
                       :date => '1916-01-01', 
                       :filename => 'the-road-not-taken', 
                       :category => 'poems'}

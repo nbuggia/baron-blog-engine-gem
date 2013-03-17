@@ -12,7 +12,7 @@ def load_config
                     :permalink_prefix => '',
                     :permalink_date_format => :year_month_day_date, # :year_date, :year_month_date, :year_month_day_date, :no_date
                     :article_max => 5,
-                    :theme => 'test',
+                    :theme => 'typography',
                     :sample_data_path => SAMPLE_DATA_PATH,
                     :google_analytics => GOOGLE_ANALYTICS,
                     :google_webmaster => GOOGLE_WEBMASTER)

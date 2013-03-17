@@ -65,7 +65,7 @@ describe "Baron" do
 
   describe "GET category home page" do
     before :all do
-      @response = @baron.get('/poems/')
+      @response = @baron.get('/north-of-boston/')
     end
 
     it_behaves_like "Server Response"
@@ -113,7 +113,6 @@ describe "Baron" do
       response.body.should include('404')
       # should not render in the layout.rhtml if <html is in the first 100 chars
       response.body.should_not include("<meta name=\"description\" content="">")
-      response.body.should include ('Error')
     end
     
   end
@@ -128,8 +127,8 @@ describe "Baron" do
     it "returns expected content" do
       @response.body.should include(@config[:title])
       @response.body.should include("#{@config[:url]}/feed.rss")
-      @response.body.scan(/<entry>/).count.should == 3
-      @response.body.scan(/<\/entry>/).count.should == 3
+      @response.body.scan(/<entry>/).count.should == 5
+      @response.body.scan(/<\/entry>/).count.should == 5
       @response.body.should include('<feed')
       @response.body.should include('</feed>')
     end 
@@ -144,15 +143,6 @@ describe "Baron" do
   end
   
   describe "Redirect URLs" do
-    it "should redirect with 301" do
-      @response = @baron.get('/foobar-test-1')
-      @response.status.should == 301
-      @response['Location'].should == '/'
-      @response = @baron.get('/foobar-test-2')
-      @response.status.should == 301
-      @response['Location'].should == '/archives'
-    end
-    
     it "should canonicalize pagination at page 1" do
       @response = @baron.get('/page/1/')
       @response.status.should == 301
@@ -160,13 +150,7 @@ describe "Baron" do
       @response = @baron.get('/page/1')
       @response.status.should == 301
       @response['Location'].should == '/'
-    end
-    
-    it "should redirect with 302" do
-      @response = @baron.get('/foobar-test-3')
-      @response.status.should == 302
-      @response['Location'].should == '/posts/poems/the-road-not-taken/'
-    end
+    end    
   end
   
   describe "Helper Functions" do

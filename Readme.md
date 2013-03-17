@@ -1,5 +1,12 @@
 #Baron Blog Engine Gem
 
+
+TODO: 
+- support upper case folder name
+- support rendering in the robots.txt file
+- Add sitemap to robots.txt file
+
+
 A full-featured, yet minimalist, blog engine for developers
 
 I know what you're thinking, the world doesn't need another Ruby blog 

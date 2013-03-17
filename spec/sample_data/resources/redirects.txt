@@ -4,28 +4,7 @@
 # Use this file to list all of the redirections you'd like the blog to process
 # using the same file-format as Apache.
 #
-# File Format: 
-#
-# Each line is a separate redirect. Below is a description of each field:
-#
-# Field #1 - Redirect. Doesn't really do anything but make the file easier to read
-# Field #2 - Status Code. 301 status codes are for permanent redirections. Google
-#			 transfer full PageRank for these to the destination page (unless it
-#			 is on another domain, that gets a little more complex). 302 status 
-#			 codes are for temperary redirects, those are anything less than a 
-#			 couple of days. 302 redirects are not really used that often in a blog.
-#			 http://support.google.com/webmasters/bin/answer.py?hl=en&answer=40132
-# Field #3 - Source Path. This is the path (e.g. no protocol or domain name) that 
-#			 you would like to redirect somewhere else.
-# Field #4 - Desitnation Path. This is the location you would like to redirect the
-#			 user to. It does not have to be on your domain
-#
-# Sample redirects:
-#
-# Redirect 301 /posts/my-first-article /2013/01/01/my-first-article
-# Redirect 302 / /temp-custom-home-page
-# Redirect 301 /pub/download/file?name=myarchive.zip /downloads/myarchive.zip
-# Redirect 301 /my-project https://github/my-project-home
+# http://support.google.com/webmasters/bin/answer.py?hl=en&answer=40132
 
 ###
 # Handles de-duping of pagination with root (keep this!)
@@ -33,12 +12,5 @@ Redirect 301 /page/1 /
 Redirect 301 /page/1/ /
 
 ###
-# Test redirects (don't forget to delete this before publishing)
-Redirect 301 /foobar-test-1 /
-Redirect 301 /foobar-test-2 /archives
-Redirect 302 /foobar-test-3 /posts/poems/the-road-not-taken/
-
-###
 # Add your redirects here
-
 
