@@ -99,8 +99,8 @@ module Baron
       route = (path || '/').split('/').reject { |i| i.empty? }
       route << @config[:root] if route.empty?
       mime_type = (mime_type =~ /txt|rss|json/) ? mime_type.to_sym : :html
-      categories = get_all_categories()
-      params = {:page_name => route.first}
+      categories = get_all_categories
+      params = {:page_name => route.first, :rss_feed => get_feed_path}
       params[:page_title] = (route.first == @config[:root] ? '' : "#{route.first.capitalize} #{@config[:title_delimiter]} ") + "#{@config[:title]}"          
     
       begin
@@ -112,19 +112,20 @@ module Baron
             
         # Robots... /robots.txt
         elsif route.first == 'robots'
-          File.read(get_system_resource('robots.txt')) rescue raise(Errno::ENOENT, 'Page not found')
+          PageController.new(get_all_articles, categories, @config[:article_max], params, @config) . 
+            render_rss(get_system_resource('robots.txt'))
         
         # Home page... /
         elsif route.first == @config[:root]
-          all_articles = get_all_articles()
+          all_articles = get_all_articles
           params[:page_forward] = '/page/2/' if @config[:article_max] < all_articles.count
           PageController.new(all_articles, categories, @config[:article_max], params, @config) . 
             render_html(get_theme_template(route.first), get_theme_template('layout'))
             
         # Pagination... /page/2, /page/2/
         elsif route.first == 'page' && route.count == 2
-          page_num = route.last.to_i() rescue page_num = -1
-          all_articles = get_all_articles()
+          page_num = route.last.to_i rescue page_num = -1
+          all_articles = get_all_articles
           max_pages = (all_articles.count.to_f / @config[:article_max].to_f).ceil
           raise(Errno::ENOENT, 'Page not found') if page_num < 1 or page_num > max_pages
           
@@ -142,18 +143,18 @@ module Baron
         # System routes... /robots.txt, /archives
         elsif route.first == 'archives' or route.first == 'robots'
           max_articles = ('archives' == route.first) ? :all : @config[:article_max]
-          PageController.new(get_all_articles(), categories, max_articles, params, @config) . 
+          PageController.new(get_all_articles, categories, max_articles, params, @config) . 
             render_html(get_theme_template(route.first), get_theme_template('layout'))
         
         # Custom pages... /about, /contact-us
         elsif is_route_custom_page? route.first
-          PageController.new(get_all_articles(), categories, @config[:article_max], params, @config) . 
+          PageController.new(get_all_articles, categories, @config[:article_max], params, @config) . 
             render_html(get_page_template(route.first), get_theme_template('layout'))
       
         # Category home pages... /projects/, /photography/, /poems/, etc
         elsif is_route_category_home? route.last
-          filtered_articles = get_all_articles().select { |h| h[:category] == route.last }
-          params[:page_name] = route.last.gsub('-', ' ').titleize()
+          filtered_articles = get_all_articles.select { |h| h[:category] == route.last }
+          params[:page_name] = route.last.gsub('-', ' ').titleize
           PageController.new(filtered_articles, categories, :all, params, @config) .
             render_html(get_theme_template('category'), get_theme_template('layout'))
       
@@ -186,7 +187,7 @@ module Baron
     end
 
     def get_all_articles
-      get_all_category_folder_paths().map do |folder_name|
+      get_all_category_folder_paths.map do |folder_name|
         Dir["#{folder_name}/*"].map do |e|
           if e.end_with? @config[:ext]
             parts = e.split('/')
@@ -219,7 +220,7 @@ module Baron
     end
     
     def find_single_article article_slug
-      get_all_articles().each { |fileparts| return fileparts if fileparts[:filename] == article_slug }
+      get_all_articles.each { |fileparts| return fileparts if fileparts[:filename] == article_slug }
       raise Errno::ENOENT, 'Article not found'
     end    
     
@@ -228,7 +229,7 @@ module Baron
     end
     
     def is_route_category_home? path_node
-      get_all_categories().each { |h| return true if h[:node_name] == path_node }
+      get_all_categories.each { |h| return true if h[:node_name] == path_node }
       return false
     end
 
@@ -237,6 +238,7 @@ module Baron
     def get_page_template(name)   "#{@config[:sample_data_path]}pages/#{name}.rhtml"                                end
     def get_theme_template(name)  "#{@config[:sample_data_path]}themes/#{@config[:theme]}/templates/#{name}.rhtml"  end
     def get_system_resource(name) "#{@config[:sample_data_path]}resources/#{name}"                                  end
+    def get_feed_path()           "#{@config[:url]}/feed.rss"                                                       end 
   end
 
   class Article < Hash

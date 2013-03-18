@@ -131,7 +131,7 @@ describe "Baron" do
       @response.body.scan(/<\/entry>/).count.should == 5
       @response.body.should include('<feed')
       @response.body.should include('</feed>')
-    end 
+    end    
   end
   
   describe "GET /robots.txt" do
@@ -139,7 +139,11 @@ describe "Baron" do
       @response = @baron.get('/robots.txt')
     end
     
-    it_behaves_like "Server Response"    
+    it_behaves_like "Server Response"
+    
+    it "renders expected parameters" do
+      @response.body.should include("#{@config[:url]}/feed.rss")
+    end
   end
   
   describe "Redirect URLs" do
