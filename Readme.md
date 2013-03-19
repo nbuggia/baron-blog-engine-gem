@@ -1,55 +1,11 @@
 #Baron Blog Engine Gem
 
-A full-featured, yet minimalist, blog engine for developers
+A minimalist, yet fully-featured, blog engine for developers.
 
-I know what you're thinking, the world doesn't need another Ruby blog 
-engine. And, okay, you're right, however Baron is a little bit different from
-all the others in that it is a lot more full-featured, and still only a scant 
-400 lines of easy-to-ready code.
+This project is only the blog engine gem, if you want to play with your own 
+blog, you should use this project, which includes the client:
 
-**Features**
-* Publish to heroku (or similar PaaS) using Git
-* Author articles or custom pages in markdown, text or HTML
-* Article categories supported by simply putting articles in a folder
-* Many permalink formats are supported, including a custom prefix and several 
-date formats
-* 301 or 302 redirects are support for easy porting from your current blog
-* SEO optimized with built-in support for Robots.txt, Google Analytics, Google 
-web master tools
-* Easy to customize the look & feel via a common site layout template
-* Frameworks used: Rack, RSpec, Bootstrap, JQuery, Disqus, Thin
-
-##Quick Start
-
-To use the baron blog, go to the client project and follow the instructions 
-there. This project holds the source for the engine gem.
-
-TODO - insert link to client project when ready...
-
-##Next Steps
-
-I wrote this as an excuse to learn a handful of new technologies and approaches, 
-like Ruby and TDD. There are an ambitious set of features I'd like to add that 
-each align to something else I would like to learn:
-
-* Themes - I'm designing 3-4 fancy, shmancy themes to try out this new 'flat'
-and minimalist thing everyone's excited about. Also a good excuse to dig into
-HTML5, CSS3, JQuery, Instagram's API and a few other things.
-
-* Pre-rendering - the platform nerd in me doesn't understand why the whole 
-blog isn't pre-rendered at deploy time so heroku just serves static HTML and
-assets (a la <a href="https://github.com/mojombo/jekyll">Jekyll</a>)
-
-* JavaScript Comments - the blog engine currently uses Disqus for comments,
-which is free and cool, but I hate letting other people own my data. I want 
-to build something similar to Disqus on top of 
-<a href="https://www.parse.com/">Parse</a> / 
-<a href="https://github.com/documentcloud/backbone">Backbone</a> and make it 
-really easy to use
-
-* Simple Plugin Model - I've always wanted to write a plug-in model. I tried
-to write one in C++ in college and was only able to do static linking (lame). I
-think an interpreted language will make it much easier, right?
+https://github.com/nbuggia/baron-blog
 
 ##How Does it Work?
 
@@ -94,35 +50,6 @@ article rhtml template) and the second time we render the article.rhtml results
 into the site layout template (./themes/theme/templates/layout.rhtml)
 
 * Baron::Article - the data model for a single article.
-
-**Baron Blog**
-
-Project structure:
-
-		├── Gemfile
-		├── Rakefile
-		├── articles/							place your published articles here
-		│   ├── 2012-11-09-sample-1.txt			the date and URL slug are the filename
-		│   └── category/						creating folders puts these articles in a category
-		│   ├── another category/				spaces in folder names will be replaces with '-'s
-		├── config.ru							configure features of the blog here
-		├── downloads/							files in here are publicly accessible	
-		├── drafts/								place for your unfinished articles
-		├── images/								images in here are publicly accessible
-		├── pages/								you can create custom pages in here
-		│   └── about.rhtml
-		├── resources/							
-		│   ├── feed.rss						your rss feed's rendering template
-		│   ├── redirects.txt					list of redirects the blog will process
-		│   └── robots.txt						your robots.txt file
-		└── themes/
-		    └── my-theme/						each theme has the same folder structure
-		        ├── css/
-		        ├── img/
-		        ├── js/
-		        └── templates/					rhtml rendering templates for each page type
-
-TODO - I'll update this with more detail once I've posted the Baron Blog project to github
 
 ##Thanks
 
