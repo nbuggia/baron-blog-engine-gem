@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
     "spec/baron_spec.rb",
     "spec/sample_data/.gitignore",
     "spec/sample_data/Gemfile",
-    "spec/sample_data/README.md",
     "spec/sample_data/Rakefile",
     "spec/sample_data/articles/favorites/1916-01-01-the-road-not-taken.txt",
     "spec/sample_data/articles/north of boston/1914-01-01-the-pasture.txt",
