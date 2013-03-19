@@ -131,7 +131,11 @@ describe "Baron" do
       @response.body.scan(/<\/entry>/).count.should == 5
       @response.body.should include('<feed')
       @response.body.should include('</feed>')
-    end    
+    end
+    
+    it "returns rss content type" do
+      @response['Content-Type'].should == 'application/rss+xml'
+    end
   end
   
   describe "GET /robots.txt" do
