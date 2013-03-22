@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.6"
+  s.version = "1.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
-  s.date = "2013-03-19"
+  s.date = "2013-03-22"
   s.description = "What's in the box: (1) Publish to Heroku using Git (2) Author articles in markdown (3) Article categories (4) Multiple permalink formats supported (5) Redirects (6) Advanced SEO optimizations and Google Analytics/ Webmaster Tools support. Uses Rack, RSpec, Bootstrap, JQuery, Disqus, Thin"
   s.email = "nbuggia@gmail.com"
   s.extra_rdoc_files = [
