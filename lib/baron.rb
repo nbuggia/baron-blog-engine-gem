@@ -313,7 +313,6 @@ module Baron
       :url => 'http://localhost/',                          # root URL of the site
       :date => lambda {|now| now.strftime("%d/%m/%Y") },    # date function
       :markdown => :smart,                                  # use markdown
-      :disqus => false,                                     # disqus name
       :summary => {:max => 150, :delim => /~\n/},           # length of summary and delimiter
       :ext => 'txt',                                        # extension for articles
       :permalink_prefix => '',                              # common path prefix for article permalinks
@@ -321,7 +320,8 @@ module Baron
       :article_max => 5,                                    # number of most recent articles to return to custom pages
       :theme => 'default',                                  # name of the theme to use
       :google_analytics => '',                              # account id for google analytics account
-      :google_webmaster => ''                               # HTML Meta Tag verification code for google webmaster account
+      :google_webmaster => '',                              # HTML Meta Tag verification code for google webmaster account
+      :disqus_shortname => false                            # account name for your disqus account www.disqus.com
     }
 
     def initialize obj
