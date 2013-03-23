@@ -102,6 +102,7 @@ module Baron
       params = {:page_name => route.first, :rss_feed => get_feed_path}
       params[:page_title] = (route.first == @config[:root] ? '' : "#{route.first.capitalize} #{@config[:title_delimiter]} ") + "#{@config[:title]}"          
       theme = Theme.new(@config)
+      theme.load_config
     
       begin
 
@@ -232,20 +233,10 @@ module Baron
       get_all_categories.each { |h| return true if h[:node_name] == path_node }
       return false
     end
-    
-    def load_theme_config filename_and_path
-      bar = {}
-      metadata = File.read(filename_and_path)
-      YAML.load(metadata).each_pair { |key, value| bar[key.downcase.to_sym] = value }
-      bar
-    rescue Errno::ENOENT => e
-      return {}
-    end
 
     def get_pages_path()          "#{@config[:sample_data_path]}pages/"                                             end
     def get_articles_path()       "#{@config[:sample_data_path]}articles"                                           end
     def get_page_template(name)   "#{@config[:sample_data_path]}pages/#{name}.rhtml"                                end
-    def get_theme_template(name)  "#{@config[:sample_data_path]}themes/#{@config[:theme]}/templates/#{name}.rhtml"  end
     def get_system_resource(name) "#{@config[:sample_data_path]}resources/#{name}"                                  end
     def get_feed_path()           "#{@config[:url]}/feed.rss"                                                       end 
   end
@@ -256,12 +247,13 @@ module Baron
       self[:root] = "/themes/#{config[:theme]}"
       self[:name] = config[:theme]
       self[:file_root] = "#{@config[:sample_data_path]}themes/#{@config[:theme]}".squeeze('/')
-      load_config("#{self[:file_root]}/theme_config.yml")
+      self[:theme_config] = "#{self[:file_root]}/theme_config.yml".squeeze('/')
     end
 
-    def load_config filename_and_path
-      metadata = File.read(filename_and_path)
-      YAML.load(metadata).each_pair { |key, value| self[key.downcase.to_sym] = value }
+    def load_config filename_and_path = ''
+      filename_and_path = filename_and_path.empty? ? self[:theme_config] : filename_and_path
+      params = YAML.load(File.read(filename_and_path))
+      params.each_pair { |key, value| self[key.downcase.to_sym] = value } unless !params
     rescue Errno::ENOENT => e
       puts "Warning: unable to load config file : " + filename_and_path
     end

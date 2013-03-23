@@ -9,6 +9,7 @@ describe "Baron::Theme" do
   before :all do
     @config = load_config()
     @theme = Baron::Theme.new(@config)
+    @theme.load_config()
   end
 
   it "finds all parameters in theme_config.yml" do
@@ -25,5 +26,13 @@ describe "Baron::Theme" do
     @theme.get_template('error').should == SAMPLE_DATA_PATH + 'themes/typography/templates/error.rhtml'
     @theme.get_template('home').should == SAMPLE_DATA_PATH + 'themes/typography/templates/home.rhtml'
     @theme.get_template('layout').should == SAMPLE_DATA_PATH + 'themes/typography/templates/layout.rhtml'
+  end
+  
+  it "doesn't crash with a bad or empty config file" do
+    theme = Baron::Theme.new({})
+    theme.load_config("#{SAMPLE_DATA_PATH}supplemental-files/theme_config.yml")
+    theme.length.should == 4
+    theme.load_config("FOOBAR-FAKE-URL-FAKE-FAKE")
+    theme.length.should == 4
   end
 end
