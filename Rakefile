@@ -25,6 +25,7 @@ end
 # Run RSpec tests
 
 require 'rspec/core/rake_task'
+'clear'
 RSpec::Core::RakeTask.new(:spec)
 
 

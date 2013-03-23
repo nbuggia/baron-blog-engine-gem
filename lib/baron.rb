@@ -57,15 +57,14 @@ module Baron
   end
   
   class PageController
-    def initialize articles_parts, categories, max_articles, params, config
-      @categories, @params, @config = categories, params, config
+    def initialize articles_parts, categories, max_articles, params, theme, config
+      @categories, @params, @theme, @config = categories, params, theme, config
       stop_at = (:all == max_articles) ? articles_parts.count : max_articles
       @articles = articles_parts.take(stop_at).map { |file_parts| Article.new(file_parts, @config) }
       @article = @articles.first
     end
     
     def render_html partial_template, layout_template
-      @theme_root = "/themes/#{@config[:theme]}"
       @content = ERB.new(File.read(partial_template)).result(binding)
       if @content[0..99].include? '<html'
         return @content
@@ -102,25 +101,26 @@ module Baron
       categories = get_all_categories
       params = {:page_name => route.first, :rss_feed => get_feed_path}
       params[:page_title] = (route.first == @config[:root] ? '' : "#{route.first.capitalize} #{@config[:title_delimiter]} ") + "#{@config[:title]}"          
+      theme = Theme.new(@config)
     
       begin
 
         # RSS feed... /feed.rss
         body = if mime_type == :rss
-          PageController.new(get_all_articles, categories, @config[:article_max], params, @config) . 
+          PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
             render_rss(get_system_resource('feed.rss'))
             
         # Robots... /robots.txt
         elsif route.first == 'robots'
-          PageController.new(get_all_articles, categories, @config[:article_max], params, @config) . 
+          PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
             render_rss(get_system_resource('robots.txt'))
         
         # Home page... /
         elsif route.first == @config[:root]
           all_articles = get_all_articles
           params[:page_forward] = '/page/2/' if @config[:article_max] < all_articles.count
-          PageController.new(all_articles, categories, @config[:article_max], params, @config) . 
-            render_html(get_theme_template(route.first), get_theme_template('layout'))
+          PageController.new(all_articles, categories, @config[:article_max], params, theme, @config) . 
+            render_html(theme.get_template(route.first), theme.get_template('layout'))
             
         # Pagination... /page/2, /page/2/
         elsif route.first == 'page' && route.count == 2
@@ -137,33 +137,33 @@ module Baron
           params[:page_forward] = "/page/#{(page_num+1).to_s}/" if show_next
           params[:page_title] = "Page #{page_num.to_s} #{@config[:title_delimiter]} #{@config[:title]}"
           
-          PageController.new(articles_on_this_page, categories, @config[:article_max], params, @config) . 
-            render_html(get_theme_template('home'), get_theme_template('layout'))
+          PageController.new(articles_on_this_page, categories, @config[:article_max], params, theme, @config) . 
+            render_html(theme.get_template('home'), theme.get_template('layout'))
         
         # System routes... /robots.txt, /archives
         elsif route.first == 'archives' or route.first == 'robots'
           max_articles = ('archives' == route.first) ? :all : @config[:article_max]
-          PageController.new(get_all_articles, categories, max_articles, params, @config) . 
-            render_html(get_theme_template(route.first), get_theme_template('layout'))
+          PageController.new(get_all_articles, categories, max_articles, params, theme, @config) . 
+            render_html(theme.get_template(route.first), theme.get_template('layout'))
         
         # Custom pages... /about, /contact-us
         elsif is_route_custom_page? route.first
-          PageController.new(get_all_articles, categories, @config[:article_max], params, @config) . 
-            render_html(get_page_template(route.first), get_theme_template('layout'))
+          PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
+            render_html(get_page_template(route.first), theme.get_template('layout'))
       
         # Category home pages... /projects/, /photography/, /poems/, etc
         elsif is_route_category_home? route.last
           filtered_articles = get_all_articles.select { |h| h[:category] == route.last }
           params[:page_name] = route.last.gsub('-', ' ').titleize
-          PageController.new(filtered_articles, categories, :all, params, @config) .
-            render_html(get_theme_template('category'), get_theme_template('layout'))
+          PageController.new(filtered_articles, categories, :all, params, theme, @config) .
+            render_html(theme.get_template('category'), theme.get_template('layout'))
       
         # Articles... /posts/2013/01/18/my-article-title, /posts/category/2013/my-article-title, etc
         else
           article = [ find_single_article(route.last) ]
           params[:page_title] = "#{article.first[:filename].gsub('-',' ').titleize} #{@config[:title_delimiter]} #{@config[:title]}"
-          PageController.new(article, categories, 1, params, @config) .
-            render_html(get_theme_template('article'), get_theme_template('layout'))
+          PageController.new(article, categories, 1, params, theme, @config) .
+            render_html(theme.get_template('article'), theme.get_template('layout'))
         end
 
         return :body => body, :type => mime_type, :status => 200
@@ -173,8 +173,8 @@ module Baron
         # 404 Page Not Found
         params[:error_message] = 'Page not found'
         params[:error_code] = '404'
-        body = PageController.new([], categories, 0, params, @config) .
-                render_html(get_theme_template('error'), get_theme_template('layout'))
+        body = PageController.new([], categories, 0, params, theme, @config) .
+                render_html(theme.get_template('error'), theme.get_template('layout'))
         
         return :body => body, :type => :html, :status => 404
       end 
@@ -232,6 +232,15 @@ module Baron
       get_all_categories.each { |h| return true if h[:node_name] == path_node }
       return false
     end
+    
+    def load_theme_config filename_and_path
+      bar = {}
+      metadata = File.read(filename_and_path)
+      YAML.load(metadata).each_pair { |key, value| bar[key.downcase.to_sym] = value }
+      bar
+    rescue Errno::ENOENT => e
+      return {}
+    end
 
     def get_pages_path()          "#{@config[:sample_data_path]}pages/"                                             end
     def get_articles_path()       "#{@config[:sample_data_path]}articles"                                           end
@@ -239,6 +248,29 @@ module Baron
     def get_theme_template(name)  "#{@config[:sample_data_path]}themes/#{@config[:theme]}/templates/#{name}.rhtml"  end
     def get_system_resource(name) "#{@config[:sample_data_path]}resources/#{name}"                                  end
     def get_feed_path()           "#{@config[:url]}/feed.rss"                                                       end 
+  end
+  
+  class Theme < Hash
+    def initialize config
+      @config = config
+      self[:root] = "/themes/#{config[:theme]}"
+      self[:name] = config[:theme]
+      self[:file_root] = "#{@config[:sample_data_path]}themes/#{@config[:theme]}".squeeze('/')
+      load_config("#{self[:file_root]}/theme_config.yml")
+    end
+
+    def load_config filename_and_path
+      metadata = File.read(filename_and_path)
+      YAML.load(metadata).each_pair { |key, value| self[key.downcase.to_sym] = value }
+    rescue Errno::ENOENT => e
+      puts "Warning: unable to load config file : " + filename_and_path
+    end
+        
+    def root()   self[:root]    end
+          
+    def get_template name
+      "#{self[:file_root]}/templates/#{name}.rhtml".squeeze('/')
+    end
   end
 
   class Article < Hash
@@ -289,7 +321,7 @@ module Baron
     
     def load_article filename_and_path
       metadata, self[:body] = File.read(filename_and_path).split(/\n\n/, 2)
-      YAML.load(metadata).each_pair { |k,v| self[k.downcase.to_sym] = v }
+      YAML.load(metadata).each_pair { |key, value| self[key.downcase.to_sym] = value }
     end
     
     def markdown text

@@ -1,0 +1,9 @@
+###
+# Theme Config File
+#
+
+# parameter comments
+masthead_url: 'http://www.my-corporation.com'
+Company_Description: Insert content here
+
+param_test: "FOOBAR"

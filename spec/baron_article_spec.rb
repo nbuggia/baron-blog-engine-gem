@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 ###
-# Tests Baron::ArticleModel class
+# Tests Baron::Article class
 #
 # This class represents an individual article
 
-describe "Baron::ArticleModel" do
+describe "Baron::Article" do
   before :all do
     @config = load_config()
     @article_parts = {:filename_and_path => "#{SAMPLE_DATA_PATH}articles/favorites/1916-01-01-the-road-not-taken.txt", 

@@ -9,7 +9,7 @@ baron = Baron::Server.new do
   set :disqus, true
 
   # Specify the title of your blog
-  set :title, 'Robert Frost'
+  set :title, 'Robert Frost - Sample Data'
 
   # Specify a description for your blog
   set :description, 'The fake blog of Robert Frost'
