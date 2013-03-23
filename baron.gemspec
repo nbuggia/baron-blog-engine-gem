@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.8"
+  s.version = "1.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     "spec/sample_data/resources/feed.rss",
     "spec/sample_data/resources/redirects.txt",
     "spec/sample_data/resources/robots.txt",
+    "spec/sample_data/supplemental-files/theme_config.yml",
     "spec/sample_data/themes/typography/css/app.css",
     "spec/sample_data/themes/typography/css/bootstrap-responsive.css",
     "spec/sample_data/themes/typography/css/bootstrap-responsive.min.css",
