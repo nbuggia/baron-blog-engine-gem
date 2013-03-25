@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.9"
+  s.version = "1.0.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
-  s.date = "2013-03-23"
+  s.date = "2013-03-25"
   s.description = "What's in the box: (1) Publish to Heroku using Git (2) Author articles in markdown (3) Article categories (4) Multiple permalink formats supported (5) Redirects (6) Advanced SEO optimizations and Google Analytics/ Webmaster Tools support. Uses Rack, RSpec, Bootstrap, JQuery, Disqus, Thin"
   s.email = "nbuggia@gmail.com"
   s.extra_rdoc_files = [
@@ -22,6 +22,12 @@ Gem::Specification.new do |s|
     "VERSION",
     "baron.gemspec",
     "lib/baron.rb",
+    "lib/baron/blog_engine.rb",
+    "lib/baron/config.rb",
+    "lib/baron/models/article.rb",
+    "lib/baron/models/theme.rb",
+    "lib/baron/page_controller.rb",
+    "lib/baron/utils.rb",
     "spec/baron_article_spec.rb",
     "spec/baron_blog_engine_spec.rb",
     "spec/baron_spec.rb",
@@ -89,7 +95,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/nbuggia/baron-blog-engine-gem"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.25"
-  s.summary = "Minimalist, yet full-featured, blog engine in 400 lines of code."
+  s.summary = "Minimalist, yet full-featured, blog engine."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
