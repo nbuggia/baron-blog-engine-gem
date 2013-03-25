@@ -20,18 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 
-- - -
+---
 
 While writing this blog engine, I barrowed some code and design approches
-from the Toto project by Cloudhead and the Scanty project by Adam Wiggins.
-I'm not sure how much code or design awesomeness one needs to use before
-they are obligated to include their license, so I'm included a link to 
-each of them just in case (and thank you both for your awesomeness!)
+from many existing blog engines. I'm not sure how much one must borrow before
+they are obligated to include the original license, so I'm including all of
+them below just in case.
 
 Toto
  - URL: https://github.com/cloudhead/toto
  - Author: http://cloudhead.io/ (Alexis Sellier)
  - License: https://github.com/cloudhead/toto/blob/master/LICENSE
+
+Jekyll
+ - URL: https://github.com/mojombo/jekyll
+ - Author: http://tom.preston-werner.com/ (Tom Preston-Werner)
+ - License: https://github.com/mojombo/jekyll/blob/master/LICENSE
 
 Scanty
  - URL: https://github.com/adamwiggins/scanty

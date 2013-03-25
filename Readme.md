@@ -5,7 +5,7 @@ A minimalist, yet fully-featured, blog engine for developers.
 This project is only the blog engine gem, if you want to play with your own 
 blog, you should use this project, which includes the client:
 
-https://github.com/nbuggia/baron-blog
+**https://github.com/nbuggia/baron-blog**
 
 ##How Does it Work?
 
