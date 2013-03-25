@@ -63,7 +63,7 @@ module Baron
     }
 
     def get_feed_permalink
-      "#{@config[:url]}feed.rss"
+      "#{self[:url]}feed.rss"
     end 
 
     def initialize obj
