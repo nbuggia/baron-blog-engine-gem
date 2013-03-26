@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.11"
+  s.version = "1.0.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
-  s.date = "2013-03-25"
+  s.date = "2013-03-26"
   s.description = "What's in the box: (1) Publish to Heroku using Git (2) Author articles in markdown (3) Article categories (4) Multiple permalink formats supported (5) Redirects (6) Advanced SEO optimizations and Google Analytics/ Webmaster Tools support. Uses Rack, RSpec, Bootstrap, JQuery, Disqus, Thin"
   s.email = "nbuggia@gmail.com"
   s.extra_rdoc_files = [
@@ -47,7 +47,6 @@ Gem::Specification.new do |s|
     "spec/sample_data/images/robert-frost.png",
     "spec/sample_data/pages/about.rhtml",
     "spec/sample_data/pages/test.rhtml",
-    "spec/sample_data/resources/feed.rss",
     "spec/sample_data/resources/redirects.txt",
     "spec/sample_data/resources/robots.txt",
     "spec/sample_data/supplemental-files/theme_config.yml",
@@ -71,25 +70,6 @@ Gem::Specification.new do |s|
     "spec/sample_data/themes/typography/templates/home.rhtml",
     "spec/sample_data/themes/typography/templates/layout.rhtml",
     "spec/sample_data/themes/typography/theme_config.yml",
-    "spec/sample_data/themes/typography/typography/css/app.css",
-    "spec/sample_data/themes/typography/typography/css/bootstrap-responsive.css",
-    "spec/sample_data/themes/typography/typography/css/bootstrap-responsive.min.css",
-    "spec/sample_data/themes/typography/typography/css/bootstrap.css",
-    "spec/sample_data/themes/typography/typography/css/bootstrap.min.css",
-    "spec/sample_data/themes/typography/typography/img/github.png",
-    "spec/sample_data/themes/typography/typography/img/glyphicons-halflings-white.png",
-    "spec/sample_data/themes/typography/typography/img/glyphicons-halflings.png",
-    "spec/sample_data/themes/typography/typography/img/instagram.png",
-    "spec/sample_data/themes/typography/typography/js/bootstrap.js",
-    "spec/sample_data/themes/typography/typography/js/bootstrap.min.js",
-    "spec/sample_data/themes/typography/typography/js/image_alt.js",
-    "spec/sample_data/themes/typography/typography/js/read_later.js",
-    "spec/sample_data/themes/typography/typography/templates/archives.rhtml",
-    "spec/sample_data/themes/typography/typography/templates/article.rhtml",
-    "spec/sample_data/themes/typography/typography/templates/category.rhtml",
-    "spec/sample_data/themes/typography/typography/templates/error.rhtml",
-    "spec/sample_data/themes/typography/typography/templates/home.rhtml",
-    "spec/sample_data/themes/typography/typography/templates/layout.rhtml",
     "spec/spec_helper.rb"
   ]
   s.homepage = "https://github.com/nbuggia/baron-blog-engine-gem"
