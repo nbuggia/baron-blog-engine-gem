@@ -8,7 +8,7 @@ def load_config
   Baron::Config.new(:markdown => true,
                     :title => 'my blog',
                     :author => 'John Smith',
-                    :url => 'http://localhost',
+                    :url => 'http://localhost/',
                     :permalink_prefix => '',
                     :permalink_date_format => :year_month_day_date, # :year_date, :year_month_date, :year_month_day_date, :no_date
                     :article_max => 5,

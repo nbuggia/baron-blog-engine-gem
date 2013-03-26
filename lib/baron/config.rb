@@ -63,8 +63,7 @@ module Baron
     }
 
     def get_feed_permalink
-      #"#{self[:url]}feed.atom"
-      "http://localhost:3000/feed.atom"
+      "#{self[:url]}feed.atom"
     end 
 
     def initialize obj

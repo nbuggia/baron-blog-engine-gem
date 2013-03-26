@@ -46,7 +46,7 @@ baron = Baron::Server.new do
   # Specify the URL of your blog for creating permalinks (good in case people
   # steal your content, then the links will still point to your articles.)
   # for example: http://nathanbuggia.com
-  set :url, 'http://localhost:3000/'
+  set :url, 'http://localhost/'
 
   # specify your google analytics ID 
   # format of "UA-XXXXXX-X"

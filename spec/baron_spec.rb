@@ -130,7 +130,7 @@ describe "Baron" do
     
     it "returns expected content" do
       @response.body.should include(@config[:title])
-      @response.body.should include("http://localhost:3000/feed.atom")
+      @response.body.should include("http://localhost/feed.atom")
       @response.body.scan(/<entry>/).count.should == 5
       @response.body.scan(/<\/entry>/).count.should == 5
       @response.body.should include('<feed')
@@ -149,10 +149,6 @@ describe "Baron" do
     
     it_behaves_like "Server Response"
     
-    it "renders expected parameters" do
-      @response.body.should include("http://localhost:3000/feed.atom")
-    end
-
     it "returns text content type" do
       @response['Content-Type'].should == 'text/plain'
     end
