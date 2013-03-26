@@ -45,6 +45,11 @@ module Baron
     def date
       @config[:date].call(self[:date])
     end
+
+    def date_iso8601
+      # "2009-10-26T04:47:09Z"
+      self[:date].strftime("%FT%T%:z")
+    end
     
     def author
       self[:author] || @config[:author]
@@ -78,5 +83,5 @@ module Baron
     end
 
   end
-  
+
 end
