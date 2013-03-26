@@ -16,27 +16,26 @@ module Baron
       end
     end
     
-    def process_request path, env = {}, mime_type = :html
+    def process_request path, env = {}
       route = (path || '/').split('/').reject { |i| i.empty? }
       route << @config[:root] if route.empty?
-      mime_type = (mime_type =~ /txt|rss|json/) ? mime_type.to_sym : :html
       categories = get_all_categories
-      params = {:page_name => route.first, :rss_feed => get_feed_path}
+      params = {:page_name => route.first, :feed_permalink => @config.get_feed_permalink}
       params[:page_title] = (route.first == @config[:root] ? '' : "#{route.first.capitalize} #{@config[:title_delimiter]} ") + "#{@config[:title]}"          
       theme = Theme.new(@config)
       theme.load_config
     
       begin
 
-        # RSS feed... /feed.rss
-        body = if mime_type == :rss
+        # Atom feed... /feed.atom
+        body = if route.first == 'feed.atom'
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
-            render_rss(get_system_resource('feed.rss'))
+            render(get_system_resource('feed.atom'))
             
         # Robots... /robots.txt
-        elsif route.first == 'robots'
+        elsif route.first == 'robots.txt'
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
-            render_rss(get_system_resource('robots.txt'))
+            render(get_system_resource('robots.txt'))
         
         # Home page... /
         elsif route.first == @config[:root]
@@ -89,7 +88,7 @@ module Baron
             render_html(theme.get_template('article'), theme.get_template('layout'))
         end
 
-        return :body => body, :type => mime_type, :status => 200
+        return :body => body, :status => 200
       
       rescue Errno::ENOENT => e
         
@@ -99,7 +98,7 @@ module Baron
         body = PageController.new([], categories, 0, params, theme, @config) .
                 render_html(theme.get_template('error'), theme.get_template('layout'))
         
-        return :body => body, :type => :html, :status => 404
+        return :body => body, :status => 404
       end 
     end
 
@@ -176,10 +175,6 @@ module Baron
     def get_system_resource name
       "#{@config[:sample_data_path]}resources/#{name}".squeeze('/')
     end
-    
-    def get_feed_path
-      "#{@config[:url]}/feed.rss"
-    end 
   end
   
 end

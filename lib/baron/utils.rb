@@ -15,14 +15,6 @@ class Fixnum
 end
 
 # Avoid a collision with ActiveSupport
-class Date
-  unless respond_to? :iso8601
-    # Return the date as a String formatted according to ISO 8601.
-    def iso8601
-      ::Time.utc(year, month, day, 0, 0, 0, 0).iso8601
-    end
-  end
-end
 
 class String
   # Support String::bytesize in old versions of Ruby

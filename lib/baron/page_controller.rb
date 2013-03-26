@@ -17,7 +17,7 @@ module Baron
       end 
     end
     
-    def render_rss template
+    def render template
       ERB.new(File.read(template)).result(binding)
     end
   end

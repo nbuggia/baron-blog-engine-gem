@@ -1,5 +1,7 @@
 module Baron
+  
   class Article < Hash
+    
     def initialize file_parts, config = {}
       @config = config
       self[:filename_and_path] = file_parts[:filename_and_path]
@@ -36,12 +38,34 @@ module Baron
       "/#{permalink_prefix}/#{self[:category]}#{date_path}/#{slug}/".squeeze('/')      
     end
     
-    def title()     self[:title] || 'Untitled'                                                end
-    def date()      @config[:date].call(self[:date])                                          end
-    def author()    self[:author] || @config[:author]                                         end
-    def category()  self[:category]                                                           end
-    def permalink() "http://#{(@config[:url].sub("http://", '') + self.path).squeeze('/')}"   end
-    def slug()      self[:slug]                                                               end
+    def title
+      self[:title] || 'Untitled'
+    end
+    
+    def date
+      @config[:date].call(self[:date])
+    end
+
+    def date_iso8601
+      # "2009-10-26T04:47:09Z"
+      self[:date].strftime("%FT%T%:z")
+    end
+    
+    def author
+      self[:author] || @config[:author]
+    end
+    
+    def category
+      self[:category]
+    end
+    
+    def permalink
+      "http://#{(@config[:url].sub("http://", '') + self.path).squeeze('/')}"
+    end
+    
+    def slug
+      self[:slug]
+    end
     
     protected 
     
@@ -57,5 +81,7 @@ module Baron
         text.strip
       end
     end
+
   end
+
 end

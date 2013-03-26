@@ -1,5 +1,7 @@
 module Baron
+  
   class Theme < Hash
+
     def initialize config
       @config = config
       self[:root] = "/themes/#{config[:theme]}"
@@ -13,13 +15,16 @@ module Baron
       params = YAML.load(File.read(filename_and_path))
       params.each_pair { |key, value| self[key.downcase.to_sym] = value } unless !params
     rescue Errno::ENOENT => e
-      puts "Warning: unable to load config file : " + filename_and_path
+      # puts "Warning: unable to load config file : " + filename_and_path
     end
       
-    def root()   self[:root]    end
+    def root
+       self[:root]
+    end
         
     def get_template name
       "#{self[:file_root]}/templates/#{name}.rhtml".squeeze('/')
     end
   end
+
 end
