@@ -41,23 +41,22 @@ module Baron
       return [400, {}, []] unless @request.get?
 
       @response = Rack::Response.new
-      path, mime = @request.path_info.split('.')     
-      redirected_url, status = @blog_engine.process_redirects(path)
+      
+      path, ext = @request.path_info.split('.')
+      extension = ext.to_s.empty? ? '.html' : ".#{ext}"
+
+      redirected_url, status = @blog_engine.process_redirects(@request.path_info)
 
       if status
         @response.status = status
         @response['Location'] = redirected_url
       else
-        baron_response = @blog_engine.process_request(path, env, *(mime ? mime : []))
+        baron_response = @blog_engine.process_request(@request.path_info, env)
         @response.body = [baron_response[:body]]
         @response.status = baron_response[:status]      
         @response['Content-Length'] = baron_response[:body].bytesize.to_s unless baron_response[:body].empty?
-        @response['Content-Type'] = Rack::Mime.mime_type(".#{baron_response[:type]}")
-        @response['Cache-Control'] = if Baron.env == 'production'
-          "public, max-age=#{@config[:cache]}"
-        else
-          "no-cache, must-revalidate"
-        end
+        @response['Content-Type'] = Rack::Mime.mime_type(extension)
+        @response['Cache-Control'] = (Baron.env == 'production') ? "public, max-age=#{@config[:cache]}" : "no-cache, must-revalidate"
 
         @response['ETag'] = %("#{Digest::SHA1.hexdigest(baron_response[:body])}")
       end

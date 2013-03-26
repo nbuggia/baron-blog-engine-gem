@@ -15,6 +15,10 @@ shared_examples_for "Server HTML Response" do
   it "should be instrumented" do
     @response.body.should include(GOOGLE_ANALYTICS) unless GOOGLE_ANALYTICS.empty?
   end
+
+  it "returns HTML content type" do
+      @response['Content-Type'].should == 'text/html'
+  end
   
   it "should generate valid HTML" do
     @response.body.scan(/<html/).count.should == 1
@@ -117,24 +121,24 @@ describe "Baron" do
     
   end
   
-  describe "GET /feed.rss" do    
+  describe "GET /feed.atom" do    
     before :all do
-      @response = @baron.get('/feed.rss')
+      @response = @baron.get('/feed.atom')
     end
     
     it_behaves_like "Server Response"
     
     it "returns expected content" do
       @response.body.should include(@config[:title])
-      @response.body.should include("#{@config[:url]}/feed.rss")
+      @response.body.should include("http://localhost:3000/feed.atom")
       @response.body.scan(/<entry>/).count.should == 5
       @response.body.scan(/<\/entry>/).count.should == 5
       @response.body.should include('<feed')
       @response.body.should include('</feed>')
     end
     
-    it "returns rss content type" do
-      @response['Content-Type'].should == 'application/rss+xml'
+    it "returns atom content type" do
+      @response['Content-Type'].should == 'application/atom+xml'
     end
   end
   
@@ -146,7 +150,11 @@ describe "Baron" do
     it_behaves_like "Server Response"
     
     it "renders expected parameters" do
-      @response.body.should include("#{@config[:url]}/feed.rss")
+      @response.body.should include("http://localhost:3000/feed.atom")
+    end
+
+    it "returns text content type" do
+      @response['Content-Type'].should == 'text/plain'
     end
   end
   
@@ -161,6 +169,8 @@ describe "Baron" do
     end    
   end
   
+  # add a method to test CSS, and a downloaded file, like a ppt
+
   describe "Helper Functions" do
     it "should return a titleized string" do
       "the quick red fox".titleize.should == "The Quick Red Fox"

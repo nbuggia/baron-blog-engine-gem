@@ -19,7 +19,7 @@ describe "Baron::BlogEngine" do
       @blog_engine.get_page_template('about').should == SAMPLE_DATA_PATH + 'pages/about.rhtml'
       @blog_engine.get_system_resource('redirects.txt').should == SAMPLE_DATA_PATH + 'resources/redirects.txt'
       @blog_engine.get_system_resource('robots.txt').should == SAMPLE_DATA_PATH + 'resources/robots.txt'
-      @blog_engine.get_system_resource('feeds.rss').should == SAMPLE_DATA_PATH + 'resources/feeds.rss'
+      @blog_engine.get_system_resource('feeds.atom').should == SAMPLE_DATA_PATH + 'resources/feeds.atom'
     end 
     
     it "finds all categories" do
