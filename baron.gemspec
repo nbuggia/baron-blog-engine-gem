@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "baron"
-  s.version = "1.0.12"
+  s.version = "1.0.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Buggia"]
@@ -47,6 +47,7 @@ Gem::Specification.new do |s|
     "spec/sample_data/images/robert-frost.png",
     "spec/sample_data/pages/about.rhtml",
     "spec/sample_data/pages/test.rhtml",
+    "spec/sample_data/resources/feed.atom",
     "spec/sample_data/resources/redirects.txt",
     "spec/sample_data/resources/robots.txt",
     "spec/sample_data/supplemental-files/theme_config.yml",
