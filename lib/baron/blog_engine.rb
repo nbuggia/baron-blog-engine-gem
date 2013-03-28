@@ -88,7 +88,7 @@ module Baron
             render_html(theme.get_template('article'), theme.get_template('layout'))
         end
 
-        return body: body, status: 200
+        return { body: body, status: 200 }
       
       rescue Errno::ENOENT => e
         
@@ -98,7 +98,7 @@ module Baron
         body = PageController.new([], categories, 0, params, theme, @config) .
                 render_html(theme.get_template('error'), theme.get_template('layout'))
         
-        return body: body, status: 404
+        return { body: body, status: 404 }
       end 
     end
 
