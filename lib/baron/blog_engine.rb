@@ -88,7 +88,7 @@ module Baron
             render_html(theme.get_template('article'), theme.get_template('layout'))
         end
 
-        return :body => body, :status => 200
+        return body: body, status: 200
       
       rescue Errno::ENOENT => e
         
@@ -98,7 +98,7 @@ module Baron
         body = PageController.new([], categories, 0, params, theme, @config) .
                 render_html(theme.get_template('error'), theme.get_template('layout'))
         
-        return :body => body, :status => 404
+        return body: body, status: 404
       end 
     end
 
@@ -116,11 +116,11 @@ module Baron
           if e.end_with? @config[:ext]
             parts = e.split('/')
             {
-              :filename_and_path => e,
-              :date => parts.last[0..9],
+              filename_and_path: e,
+              date: parts.last[0..9],
               # trims date and extention 
-              :filename => parts.last[11..(-1 * (@config[:ext].length + 2))].downcase,
-              :category => parts[parts.count-2] == 'articles' ? '' : parts[parts.count-2]
+              filename: parts.last[11..(-1 * (@config[:ext].length + 2))].downcase,
+              category: parts[parts.count-2] == 'articles' ? '' : parts[parts.count-2]
             }
           end
         end
@@ -135,10 +135,10 @@ module Baron
       Dir["#{get_articles_path}/*/"].map do |a| 
         folder_name = File.basename(a)
         {
-          :name => folder_name.titleize,
-          :node_name => folder_name.gsub(' ', '-'),
-          :path => "/#{@config[:permalink_prefix]}/#{folder_name.gsub(' ', '-')}/".squeeze('/'),
-          :count => Dir["#{get_articles_path}/#{folder_name}/*"].count 
+          name: folder_name.titleize,
+          node_name: folder_name.gsub(' ', '-'),
+          path: "/#{@config[:permalink_prefix]}/#{folder_name.gsub(' ', '-')}/".squeeze('/'),
+          count: Dir["#{get_articles_path}/#{folder_name}/*"].count 
         }
       end .
         sort_by { |hash| hash[:name] }
