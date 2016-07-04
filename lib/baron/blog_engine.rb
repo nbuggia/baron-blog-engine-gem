@@ -76,14 +76,14 @@ module Baron
         # Category home pages... /projects/, /photography/, /poems/, etc
         elsif is_route_category_home? route.last
           filtered_articles = get_all_articles.select { |h| h[:category] == route.last }
-          params[:page_name] = route.last.gsub('-', ' ').titleize
+          params[:page_name] = titlecase(route.last.gsub('-', ' '))
           PageController.new(filtered_articles, categories, :all, params, theme, @config) .
             render_html(theme.get_template('category'), theme.get_template('layout'))
       
         # Articles... /posts/2013/01/18/my-article-title, /posts/category/2013/my-article-title, etc
         else
           article = [ find_single_article(route.last) ]
-          params[:page_title] = "#{article.first[:filename].gsub('-',' ').titleize} #{@config[:title_delimiter]} #{@config[:title]}"
+          params[:page_title] = "#{titlecase(article.first[:filename].gsub('-',' '))} #{@config[:title_delimiter]} #{@config[:title]}"
           PageController.new(article, categories, 1, params, theme, @config) .
             render_html(theme.get_template('article'), theme.get_template('layout'))
         end
@@ -135,7 +135,7 @@ module Baron
       Dir["#{get_articles_path}/*/"].map do |a| 
         folder_name = File.basename(a)
         {
-          name: folder_name.titleize,
+          name: titlecase(folder_name),
           node_name: folder_name.gsub(' ', '-'),
           path: "/#{@config[:permalink_prefix]}/#{folder_name.gsub(' ', '-')}/".squeeze('/'),
           count: Dir["#{get_articles_path}/#{folder_name}/*"].count 
@@ -175,6 +175,13 @@ module Baron
     def get_system_resource name
       "#{@config[:sample_data_path]}resources/#{name}".squeeze('/')
     end
+
+    private
+
+    # Capitalize the first letter of each word in a string
+    def titlecase str
+      str.split(/(\W)/).map(&:capitalize).join       
+    end  
   end
-  
+
 end

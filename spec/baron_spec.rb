@@ -6,27 +6,27 @@ require 'spec_helper'
 
 shared_examples_for "Server Response" do
   it "should be valid" do
-    @response.status.should == 200
-    @response.body.length.should > 0
+    expect(@response.status).to eq(200)
+    expect(@response.body.length).to be > 0
   end
 end
 
 shared_examples_for "Server HTML Response" do
   it "should be instrumented" do
-    @response.body.should include(GOOGLE_ANALYTICS) unless GOOGLE_ANALYTICS.empty?
+    expect(@response.body).to include(GOOGLE_ANALYTICS) unless GOOGLE_ANALYTICS.empty?
   end
 
   it "returns HTML content type" do
-      @response['Content-Type'].should == 'text/html'
+      expect(@response['Content-Type']).to eq('text/html')
   end
   
   it "should generate valid HTML" do
-    @response.body.scan(/<html/).count.should == 1
-    @response.body.scan(/<\/html>/).count.should == 1
-    @response.body.scan(/<head>/).count.should == 1
-    @response.body.scan(/<\/head>/).count.should == 1
-    @response.body.scan(/<body/).count.should == 1
-    @response.body.scan(/<\/body>/).count.should == 1
+    expect(@response.body.scan(/<html/).count).to eq(1)
+    expect(@response.body.scan(/<\/html>/).count).to eq(1)
+    expect(@response.body.scan(/<head>/).count).to eq(1)
+    expect(@response.body.scan(/<\/head>/).count).to eq(1)
+    expect(@response.body.scan(/<body/).count).to eq(1)
+    expect(@response.body.scan(/<\/body>/).count).to eq(1)
   end
 end
 
@@ -45,7 +45,7 @@ describe "Baron" do
     it_behaves_like "Server HTML Response"
     
     it "is instrumented for Google Webmaster Tools" do
-      @response.body.should include(GOOGLE_WEBMASTER) unless GOOGLE_WEBMASTER.empty?
+      expect(@response.body).to include(GOOGLE_WEBMASTER) unless GOOGLE_WEBMASTER.empty?
     end    
   end
   
@@ -93,30 +93,30 @@ describe "Baron" do
     end
     
     it "should not render a page out of bounds" do
-      @baron.get('/page/0/').status.should == 404
-      @baron.get('/page/100/').status.should == 404
+      expect(@baron.get('/page/0/').status).to eq(404)
+      expect(@baron.get('/page/100/').status).to eq(404)
     end
     
     it "should not render a mal-formed URL" do
-      @baron.get('/page/foobar/').status.should == 404
+      expect(@baron.get('/page/foobar/').status).to eq(404)
     end
 
     it "should render a valid request" do
       response = @baron.get('/page/2/')
-      response.status.should == 200
-      response.body.length.should > 0
-      response.body.should include(GOOGLE_WEBMASTER) unless GOOGLE_WEBMASTER.empty?
+      expect(response.status).to eq(200)
+      expect(response.body.length).to be > 0
+      expect(response.body).to include(GOOGLE_WEBMASTER) unless GOOGLE_WEBMASTER.empty?
     end
   end
   
   describe "GET error page" do
     it "returns proper error data" do
       response = @baron.get('/fake-url-of-impossible-page-give-me-your-404-error')
-      response.status.should == 404
-      response.body.should include('Page not found')
-      response.body.should include('404')
-      # should not render in the layout.rhtml if <html is in the first 100 chars
-      response.body.should_not include("<meta name=\"description\" content="">")
+      expect(response.status).to eq(404)
+      expect(response.body).to include('Page not found')
+      expect(response.body).to include('404')
+      # Should not render in the layout.rhtml if <html is in the first 100 chars
+      expect(response.body).to_not include("<meta name=\"description\" content="">")
     end
     
   end
@@ -129,16 +129,16 @@ describe "Baron" do
     it_behaves_like "Server Response"
     
     it "returns expected content" do
-      @response.body.should include(@config[:title])
-      @response.body.should include("http://localhost/feed.atom")
-      @response.body.scan(/<entry>/).count.should == 5
-      @response.body.scan(/<\/entry>/).count.should == 5
-      @response.body.should include('<feed')
-      @response.body.should include('</feed>')
+      expect(@response.body).to include(@config[:title])
+      expect(@response.body).to include("http://localhost/feed.atom")
+      expect(@response.body.scan(/<entry>/).count).to eq(5)
+      expect(@response.body.scan(/<\/entry>/).count).to eq(5)
+      expect(@response.body).to include('<feed')
+      expect(@response.body).to include('</feed>')
     end
     
     it "returns atom content type" do
-      @response['Content-Type'].should == 'application/atom+xml'
+      expect(@response['Content-Type']).to eq('application/atom+xml')
     end
   end
   
@@ -150,27 +150,20 @@ describe "Baron" do
     it_behaves_like "Server Response"
     
     it "returns text content type" do
-      @response['Content-Type'].should == 'text/plain'
+      expect(@response['Content-Type']).to eq('text/plain')
     end
   end
   
   describe "Redirect URLs" do
     it "should canonicalize pagination at page 1" do
       @response = @baron.get('/page/1/')
-      @response.status.should == 301
-      @response['Location'].should == '/'
+      expect(@response.status).to eq(301)
+      expect(@response['Location']).to eq('/')
+
       @response = @baron.get('/page/1')
-      @response.status.should == 301
-      @response['Location'].should == '/'
+      expect(@response.status).to eq(301)
+      expect(@response['Location']).to eq('/')
     end    
   end
-  
-  # add a method to test CSS, and a downloaded file, like a ppt
 
-  describe "Helper Functions" do
-    it "should return a titleized string" do
-      "the quick red fox".titleize.should == "The Quick Red Fox"
-    end
-  end
-  
 end
