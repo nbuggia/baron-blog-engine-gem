@@ -22,9 +22,6 @@ module Baron
       # used to divide the different elements of the page title
       title_delimiter: "&rsaquo;",
       
-      # symbol used to represent trucated text (article summary)
-      truncation_marker: '&hellip;',
-
       # root URL of the site
       url: 'http://localhost:3000/',
 
@@ -33,6 +30,9 @@ module Baron
 
       # use markdown
       markdown: :smart,
+
+      # symbol used to represent trucated text (article summary)
+      truncation_marker: '&hellip;',
 
       # length of summary and delimiter
       summary: 

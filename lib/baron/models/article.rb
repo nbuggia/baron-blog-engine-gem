@@ -29,10 +29,10 @@ module Baron
       permalink_prefix = prefix.empty? ? @config[:permalink_prefix] : prefix
       permalink_date_format = date_format.empty? ? @config[:permalink_date_format] : date_format
       date_path = case permalink_date_format
-      when :year_date; self[:date].strftime("/%Y")
-      when :year_month_date; self[:date].strftime("/%Y/%m")
-      when :year_month_day_date; self[:date].strftime("/%Y/%m/%d")
-      else ''
+        when :year_date; self[:date].strftime("/%Y")
+        when :year_month_date; self[:date].strftime("/%Y/%m")
+        when :year_month_day_date; self[:date].strftime("/%Y/%m/%d")
+        else ''
       end
       
       "/#{permalink_prefix}/#{self[:category]}#{date_path}/#{slug}/".squeeze('/')      

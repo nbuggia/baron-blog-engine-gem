@@ -27,24 +27,24 @@ module Baron
     
       begin
 
-        # Atom feed... /feed.atom
+        # Atom feed /feed.atom
         body = if route.first == 'feed.atom'
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
             render(get_system_resource('feed.atom'))
             
-        # Robots... /robots.txt
+        # Robots /robots.txt
         elsif route.first == 'robots.txt'
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
             render(get_system_resource('robots.txt'))
         
-        # Home page... /
+        # Home page /
         elsif route.first == @config[:root]
           all_articles = get_all_articles
           params[:page_forward] = '/page/2/' if @config[:article_max] < all_articles.count
           PageController.new(all_articles, categories, @config[:article_max], params, theme, @config) . 
             render_html(theme.get_template(route.first), theme.get_template('layout'))
             
-        # Pagination... /page/2, /page/2/
+        # Pagination /page/2, /page/2/
         elsif route.first == 'page' && route.count == 2
           page_num = route.last.to_i rescue page_num = -1
           all_articles = get_all_articles
@@ -62,25 +62,25 @@ module Baron
           PageController.new(articles_on_this_page, categories, @config[:article_max], params, theme, @config) . 
             render_html(theme.get_template('home'), theme.get_template('layout'))
         
-        # System routes... /robots.txt, /archives
+        # System routes /robots.txt, /archives
         elsif route.first == 'archives' or route.first == 'robots'
           max_articles = ('archives' == route.first) ? :all : @config[:article_max]
           PageController.new(get_all_articles, categories, max_articles, params, theme, @config) . 
             render_html(theme.get_template(route.first), theme.get_template('layout'))
         
-        # Custom pages... /about, /contact-us
+        # Custom pages /about, /contact-us
         elsif is_route_custom_page? route.first
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
             render_html(get_page_template(route.first), theme.get_template('layout'))
       
-        # Category home pages... /projects/, /photography/, /poems/, etc
+        # Category home pages /projects/, /photography/, /poems/, etc
         elsif is_route_category_home? route.last
           filtered_articles = get_all_articles.select { |h| h[:category] == route.last }
           params[:page_name] = titlecase(route.last.gsub('-', ' '))
           PageController.new(filtered_articles, categories, :all, params, theme, @config) .
             render_html(theme.get_template('category'), theme.get_template('layout'))
       
-        # Articles... /posts/2013/01/18/my-article-title, /posts/category/2013/my-article-title, etc
+        # Articles /posts/2013/01/18/my-article-title, /posts/category/2013/my-article-title, etc
         else
           article = [ find_single_article(route.last) ]
           params[:page_title] = "#{titlecase(article.first[:filename].gsub('-',' '))} #{@config[:title_delimiter]} #{@config[:title]}"
