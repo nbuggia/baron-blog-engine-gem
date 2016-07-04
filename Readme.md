@@ -2,7 +2,7 @@
 
 This is my first project in Ruby. I wanted to create the simpliest blog engine I
 could that included all the features I was looking for in my person blog. 
-There are two parts, the [Baron Blog Engine Gem](https://rubygems.org/gems/baron] 
+There are two parts, the [Baron Blog Engine Gem](https://rubygems.org/gems/baron) 
 and the [Baron Blog](https://github.com/nbuggia/baron-blog) project. The gem 
 contains the code for routing, HTTP, and the MVC components of a simple blog. 
 The blog project instantiates the gem and includes the blog UI templates and 
