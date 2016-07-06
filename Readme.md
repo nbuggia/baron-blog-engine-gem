@@ -1,6 +1,6 @@
 #Baron Blog Engine Gem
 
-This is my first project in Ruby. I wanted to create the simpliest blog engine I
+This is my first project in Ruby. I wanted to create the simplest blog engine I
 could that included all the features I was looking for in my person blog. 
 There are two parts, the [Baron Blog Engine Gem](https://rubygems.org/gems/baron) 
 and the [Baron Blog](https://github.com/nbuggia/baron-blog) project. The gem 
@@ -10,7 +10,7 @@ content.
 
 ---
 
-While writing this blog engine, I barrowed some code and design approches
+While writing this blog engine, I borrowed some code and design approaches
 from many existing blog engines. Following were the most useful. 
 
 Toto

@@ -26,7 +26,6 @@ module Baron
       theme.load_config
     
       begin
-
         # Atom feed /feed.atom
         body = if route.first == 'feed.atom'
           PageController.new(get_all_articles, categories, @config[:article_max], params, theme, @config) . 
@@ -90,14 +89,12 @@ module Baron
 
         return { body: body, status: 200 }
       
-      rescue Errno::ENOENT => e
-        
+      rescue Errno::ENOENT => e     
         # 404 Page Not Found
         params[:error_message] = 'Page not found'
         params[:error_code] = '404'
         body = PageController.new([], categories, 0, params, theme, @config) .
                 render_html(theme.get_template('error'), theme.get_template('layout'))
-        
         return { body: body, status: 404 }
       end 
     end
