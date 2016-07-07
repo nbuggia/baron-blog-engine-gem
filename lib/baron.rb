@@ -12,7 +12,6 @@ require 'digest'
 require 'rdiscount'
 
 # baron specific
-require 'baron/utils'
 require 'baron/page_controller'
 require 'baron/blog_engine'
 require 'baron/config'
