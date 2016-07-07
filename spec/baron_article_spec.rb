@@ -50,5 +50,10 @@ describe "Baron::Article" do
       expect(@article.path('/foo/bar/', :year_month_date)).to eq('/foo/bar/poems/1916/01/the-road-not-taken/')
       expect(@article.path('/foo/bar/', :year_date)).to eq('/foo/bar/poems/1916/the-road-not-taken/')
     end
+
+    it "should create values correctly" do
+      expect(Baron::Article.create_slug "B's Cookies & Cream 2,3,4", Date.new(2016,6,15)).to eq("2016-06-15-b-s-cookies---cream-2-3-4")
+    end
+
   end
 end

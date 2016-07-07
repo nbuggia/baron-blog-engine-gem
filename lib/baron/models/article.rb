@@ -1,7 +1,13 @@
 module Baron
   
   class Article < Hash
-    
+
+    def self.create_slug title, date
+      slug = title.empty? ? "Untitled" : title.strip.downcase
+      slug_encoded = slug.gsub(/[^a-z0-9]/, '-')
+      "#{date.strftime("%Y-%m-%d-") + slug_encoded}"
+    end
+
     def initialize file_parts, config = {}
       @config = config
       self[:filename_and_path] = file_parts[:filename_and_path]
@@ -66,7 +72,7 @@ module Baron
     def slug
       self[:slug]
     end
-    
+
     protected 
     
     def load_article filename_and_path
