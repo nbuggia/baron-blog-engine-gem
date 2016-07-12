@@ -52,7 +52,7 @@ describe "Baron::Article" do
     end
 
     it "should create values correctly" do
-      expect(Baron::Article.create_slug "B's Cookies & Cream 2,3,4", Date.new(2016,6,15)).to eq("2016-06-15-b-s-cookies---cream-2-3-4")
+      expect(Baron::Article.create_filename_without_extension "B's Cookies & Cream 2,3,4", Date.new(2016,6,15)).to eq("2016-06-15-b-s-cookies---cream-2-3-4")
     end
 
   end

@@ -2,7 +2,7 @@ module Baron
   
   class Article < Hash
 
-    def self.create_slug title, date
+    def self.create_filename_without_extension title, date
       slug = title.empty? ? "Untitled" : title.strip.downcase
       slug_encoded = slug.gsub(/[^a-z0-9]/, '-')
       "#{date.strftime("%Y-%m-%d-") + slug_encoded}"
@@ -11,6 +11,7 @@ module Baron
     def initialize file_parts, config = {}
       @config = config
       self[:filename_and_path] = file_parts[:filename_and_path]
+      self[:filename_without_extension] = file_parts[:filename_without_extension]
       self[:slug] = file_parts[:filename]
       self[:category] = file_parts[:category].empty? ? '' : file_parts[:category]
       self[:date] = Date.parse(file_parts[:date].gsub('/', '-')) rescue Date.today
@@ -71,6 +72,10 @@ module Baron
     
     def slug
       self[:slug]
+    end
+
+    def slug_with_date
+
     end
 
     protected 

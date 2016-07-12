@@ -117,6 +117,7 @@ module Baron
               date: parts.last[0..9],
               # trims date and extention 
               filename: parts.last[11..(-1 * (@config[:ext].length + 2))].downcase,
+              filename_without_extension: parts.last[0..(-1 * (@config[:ext].length + 2))].downcase,
               category: parts[parts.count-2] == 'articles' ? '' : parts[parts.count-2]
             }
           end

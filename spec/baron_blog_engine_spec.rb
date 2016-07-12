@@ -45,14 +45,17 @@ describe "Baron::BlogEngine" do
       expect(articles_fileparts[0][:filename_and_path]).to eq(SAMPLE_DATA_PATH + 'articles/favorites/1916-01-01-the-road-not-taken.txt')
       expect(articles_fileparts[0][:date]).to eq('1916-01-01')
       expect(articles_fileparts[0][:filename]).to eq('the-road-not-taken')
-      expect(articles_fileparts[0][:category]).to eq('favorites')
+      expect(articles_fileparts[0][:filename_without_extension]).to eq('1916-01-01-the-road-not-taken')
+      expect(articles_fileparts[0][:category]).to eq('favorites')      
       expect(articles_fileparts[1][:filename_and_path]).to eq(SAMPLE_DATA_PATH + 'articles/north of boston/1914-01-05-A-Hundred-callers.txt')
       expect(articles_fileparts[1][:date]).to eq('1914-01-05')
       expect(articles_fileparts[1][:filename]).to eq('a-hundred-callers')
+      expect(articles_fileparts[1][:filename_without_extension]).to eq('1914-01-05-a-hundred-callers')
       expect(articles_fileparts[1][:category]).to eq('north of boston')
       expect(articles_fileparts.last[:filename_and_path]).to eq(SAMPLE_DATA_PATH + 'articles/other authors/1909-01-02-If.txt')
       expect(articles_fileparts.last[:date]).to eq('1909-01-02') 
       expect(articles_fileparts.last[:filename]).to eq('if')
+      expect(articles_fileparts.last[:filename_without_extension]).to eq('1909-01-02-if')
       expect(articles_fileparts.last[:category]).to eq('other authors')
     end
         
