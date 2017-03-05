@@ -136,12 +136,38 @@ module Baron
           name: titlecase(folder_name),
           node_name: folder_name.gsub(' ', '-'),
           path: "/#{@config[:permalink_prefix]}/#{folder_name.gsub(' ', '-')}/".squeeze('/'),
-          count: Dir["#{get_articles_path}/#{folder_name}/*"].count 
+          count: Dir["#{get_articles_path}/#{folder_name}/*"].count,
+          top_articles: [ filename: "foobar", filename: "foobar2" ]
         }
       end .
         sort_by { |hash| hash[:name] }
     end
-    
+
+    # TODO: refactor. Does the same thing as 'get all articles'
+    # Returns the most recent 5 articles for each category as a hash
+    #
+    # category - the node_name for the category
+    def get_top_articles category
+      Dir["#{get_articles_path}/#{category}/*"].map do |e|
+         if e.end_with? @config[:ext]
+             parts = e.split('/')
+             {
+               #filename_and_path: e,
+               #date: parts.last[0..9],
+               # trims date and extention 
+               #filename: parts.last[11..(-1 * (@config[:ext].length + 2))].downcase,
+               filename_without_extension: parts.last[0..(-1 * (@config[:ext].length + 2))].downcase,
+               #category: parts[parts.count-2] == 'articles' ? '' : parts[parts.count-2]
+             }
+         end
+       end .
+         #flatten .
+         delete_if { |a| a == nil } .
+         sort_by { |hash| hash[:date] } .
+         reverse . # sorts by decending date 
+         take(5)
+    end
+
     def find_single_article article_slug
       get_all_articles.each do |fileparts| 
         return fileparts if fileparts[:filename] == article_slug

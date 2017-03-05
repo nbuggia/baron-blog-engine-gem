@@ -31,6 +31,11 @@ describe "Baron::BlogEngine" do
       expect(categories.last[:name]).to eq('Other Authors')
       expect(categories.last[:path]).to eq('/other-authors/')
       expect(categories.last[:count]).to eq(1)
+
+      expect(categories).to eq(1)
+      #expect(@blog_engine.get_top_articles("north of boston")).to eq("")
+
+      #expect(categories.first[:top_articles]).to eq(1)
     end
 
     # todo, refactor to break out testing that we're appropriately breaking the fileparts down
